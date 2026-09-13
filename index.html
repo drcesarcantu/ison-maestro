@@ -65,7 +65,7 @@
   }
   .toc a.ok{border-color:var(--accent-line); color:var(--accent)} .toc a.ok::before{content:"✓ "}
   .toc .sep{flex:0 0 1px; height:1.2rem; background:var(--rule)}
-  .toc .right{margin-left:auto; display:flex; gap:.4rem}
+  .toc .right{position:sticky; left:0; z-index:1; display:flex; gap:.4rem; padding-right:.5rem; background:var(--ground); box-shadow:8px 0 8px -6px var(--ground)}
   .toc button.on{background:var(--accent); color:#fff; border-color:var(--accent)}
   .lang{display:inline-flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden}
   .lang button{border:0; border-radius:0} .lang button+button{border-left:1px solid var(--rule)}
@@ -156,6 +156,29 @@
   body.editing #editbar{display:flex} body.editing .wrap{padding-bottom:9rem}
   #editbar .estado{margin-left:auto}
 
+  /* ── Práctica diaria (opción múltiple) ─────────────────────────── */
+  .pr-head{display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; justify-content:space-between; margin:0 0 1rem}
+  .pr-score{font-family:var(--mono); font-size:.72rem; color:var(--muted); font-variant-numeric:tabular-nums}
+  .mc{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem 1.1rem; margin:0 0 1rem}
+  .mc .meta{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:.5rem}
+  .mc .stem{font-size:1rem; margin:0 0 .8rem}
+  .mc .opts{display:grid; gap:.45rem; margin:0; padding:0; list-style:none}
+  .mc .opt{display:grid; grid-template-columns:1.6rem 1fr; gap:.6rem; align-items:start; width:100%; text-align:left; font:inherit; font-size:.95rem;
+    padding:.55rem .7rem; border:1px solid var(--rule); border-radius:4px; background:var(--ground); color:var(--ink); cursor:pointer}
+  .mc .opt .k{font-family:var(--mono); font-size:.78rem; color:var(--accent); font-weight:600}
+  .mc .opt:hover{border-color:var(--accent-line)}
+  .mc.done .opt{cursor:default}
+  .mc.done .opt.ok{border-color:var(--ok); background:color-mix(in srgb, var(--ok) 12%, var(--surface))}
+  .mc.done .opt.bad{border-color:var(--alert); background:var(--alert-soft)}
+  .mc .why{display:none; margin:.9rem 0 0; padding-top:.8rem; border-top:1px dashed var(--rule); font-size:.9rem; color:var(--ink-soft)}
+  .mc.done .why{display:block}
+  .mc .why p{margin:0 0 .5rem} .mc .why .k{font-family:var(--mono); font-weight:600; margin-right:.3rem}
+  .mc .why .si .k{color:var(--ok)} .mc .why .no .k{color:var(--alert)}
+  .mc .veredicto{font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; margin:0 0 .6rem}
+  .mc .veredicto.ok{color:var(--ok)} .mc .veredicto.bad{color:var(--alert)}
+  .pr-prev{margin-top:1.4rem} .pr-prev summary{cursor:pointer; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--muted); padding:.4rem 0}
+  body.repaso section.chap.pr .col > *{display:block}
+
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
   .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
@@ -191,7 +214,8 @@
          next:'Siguiente', nexth:'Pendientes y últimas sesiones', resumenes:'Resumen breve de cada sesión', nores:'Los resúmenes de las sesiones nuevas aparecen aquí cuando el agente las procesa.',
          repaso:'Solo repaso', verTodo:'Ver todo', editar:'Editar', pin:'PIN de edición:', editHint:'Toca cualquier texto para corregirlo. Se manda al agente y lo publica en unos minutos.', guardando:'Mandando…', guardado:'Cambios enviados. Se publican en unos minutos.', nocambios:'No hay cambios.', errGuardar:'No se pudo mandar. Revisa la conexión o el PIN.',
          footer:'Fuentes: manual de Possover (caps. I–VI) · notas de cada sesión con minuto de la grabación · se actualiza solo después de cada webinar · repaso diario en Telegram · generado ',
-         sesion:'Sesión', tema:'Tema' },
+         sesion:'Sesión', tema:'Tema',
+         pr:'Práctica', prh:'Las 5 de hoy', prp:'Cada día suben 5 preguntas nuevas de opción múltiple, del banco que crece con cada clase. Contesta y se desglosa cada opción: por qué sí y por qué no. Las de días anteriores quedan abajo.', prDia:'Día', prScore:function(a,n){ return a+' de '+n+' correctas'; }, prOk:'✅ Correcta', prBad:'❌ Incorrecta', prPrev:'Ver días anteriores', prReset:'Reiniciar mis respuestas', prNone:'Todavía no hay preguntas en el banco.', prCap:'cap.' },
     en:{ title:'Possover’s book, corrected by Possover',
          deck:'The manual gives the exam its base; the class nuances it, updates it and sometimes contradicts it. Here they go together, chapter by chapter, with a mark for where each thing comes from.',
          eyebrow:function(n,t){ return 'Living document · sessions '+n+' of '+t+' integrated · exam Nov 22, 2026 · '; },
@@ -205,7 +229,8 @@
          next:'Next', nexth:'Pending items and latest sessions', resumenes:'Brief summary of each session', nores:'Summaries of new sessions appear here when the agent processes them.',
          repaso:'Review only', verTodo:'Show all', editar:'Edit', pin:'Edit PIN:', editHint:'Tap any text to correct it. It is sent to the agent and published within minutes.', guardando:'Sending…', guardado:'Changes sent. They will be published in a few minutes.', nocambios:'No changes.', errGuardar:'Could not send. Check the connection or the PIN.',
          footer:'Sources: Possover’s manual (chs. I–VI) · notes of each session with recording timestamps · updates itself after each webinar · daily review on Telegram · generated ',
-         sesion:'Session', tema:'Topic' }
+         sesion:'Session', tema:'Topic',
+         pr:'Practice', prh:'Today\u2019s five', prp:'Five new multiple-choice questions go up every day, from a bank that grows with each class. Answer and every option is explained: why yes and why not. Previous days stay below.', prDia:'Day', prScore:function(a,n){ return a+' of '+n+' correct'; }, prOk:'✅ Correct', prBad:'❌ Incorrect', prPrev:'See previous days', prReset:'Reset my answers', prNone:'No questions in the bank yet.', prCap:'ch.' }
   };
   var lang = LS('ison-lang') || 'es';
   var app = document.getElementById('app');
@@ -235,50 +260,74 @@
     if (quiz.length) h += '<div class="quiz" id="'+s.id+'-quiz"><div class="quiz-head"><span class="tag">'+t.quiz+' · '+quiz.length+' '+t.qs+'</span><button type="button" class="mini" data-toggle-all="'+s.id+'-quiz">'+t.showall+'</button></div>'+quiz.map(function(q){ return '<details class="q"><summary>'+q[0]+'</summary><div class="a">'+q[1]+'</div></details>'; }).join('')+'</div>';
     return h + '</div></section>';
   }
-  function dudas(){
-    var t = T[lang], p = D.preguntas || [];
-    var h = '<section class="chap preg" id="preg"><div class="rail"><span class="rn">?</span>'+t.preg+'</div><div class="col"><h2>'+t.pregh+'</h2><p>'+t.pregp+'</p>';
-    h += '<form class="nueva" id="f-duda" autocomplete="off"><div><label for="d-nombre">'+t.tuNombre+'</label><input id="d-nombre" name="nombre" maxlength="60" required></div>'+
-         '<div><label for="d-cap">'+t.cap+'</label><select id="d-cap" name="capitulo"><option value="">'+t.capAny+'</option>'+D.secciones.filter(function(s){ return s.toc; }).map(function(s){ return '<option value="'+s.id+'">'+L(s.toc)+'</option>'; }).join('')+'</select></div>'+
-         '<div><label for="d-texto">'+t.tuPreg+'</label><textarea id="d-texto" name="pregunta" maxlength="600" required></textarea></div>'+
-         '<div class="hp" aria-hidden="true"><label>Sitio</label><input name="sitio" tabindex="-1"></div>'+
-         '<div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><button type="submit" class="btn primary">'+t.enviar+'</button><span class="estado" id="d-estado"></span></div></form>';
-    if (!p.length) h += '<p class="estado">'+t.sinpreg+'</p>';
-    p.slice().reverse().forEach(function(d){
-      var sec = D.secciones.filter(function(s){ return s.id === d.capitulo; })[0];
-      h += '<div class="duda"><div class="meta">'+esc(d.nombre)+' · '+esc(d.fecha)+(sec ? ' · '+L(sec.toc) : '')+'</div>'+esc(d.pregunta)+(d.respuesta ? '<div class="resp">'+esc(L(d.respuesta))+'</div>' : '')+'</div>';
-    });
-    var pend = D.pendientes && D.pendientes[lang] || [];
-    if (pend.length) h += '<h3>'+t.pendh+'</h3><ul>'+pend.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ul>';
+  function mcCard(q, idx){
+    var t = T[lang], e = (lang === 'en' && q.en) ? q.en : q, letras = ['A','B','C','D'];
+    var resp = null; try { resp = JSON.parse(LS('ison-mc') || '{}')[q.id] || null; } catch(err){}
+    var meta = (q.capitulo ? t.prCap+' '+esc(q.capitulo) : (q.sesion || '').replace(/-/g,' ')) + (q.minuto ? ' · <span class="tc">'+esc(q.minuto)+'</span>' : '');
+    var h = '<div class="mc'+(resp ? ' done' : '')+'" data-q="'+esc(q.id)+'"><div class="meta">'+(idx+1)+' · '+meta+'</div><p class="stem">'+esc(e.pregunta)+'</p><ul class="opts">';
+    letras.forEach(function(k){ if (!e.opciones[k]) return; var cls = resp ? (k === q.correcta ? ' ok' : (k === resp ? ' bad' : '')) : '';
+      h += '<li><button type="button" class="opt'+cls+'" data-k="'+k+'"><span class="k">'+k+'</span><span>'+esc(e.opciones[k])+'</span></button></li>'; });
+    h += '</ul><div class="why">';
+    if (resp) h += mcWhy(q, e, resp);
+    return h + '</div></div>';
+  }
+  function mcWhy(q, e, resp){
+    var t = T[lang], h = '<p class="veredicto '+(resp === q.correcta ? 'ok' : 'bad')+'">'+(resp === q.correcta ? t.prOk : t.prBad)+' · '+(resp === q.correcta ? '' : '👉 '+resp+' · ')+'✅ '+q.correcta+'</p>';
+    ['A','B','C','D'].forEach(function(k){ var x = e.por_opcion && e.por_opcion[k]; if (!x) return; h += '<p class="'+(k === q.correcta ? 'si' : 'no')+'"><span class="k">'+k+(k === q.correcta ? ' ✓' : ' ✗')+'</span>'+esc(x)+'</p>'; });
+    if (e.explicacion) h += '<p><em>'+esc(e.explicacion)+'</em></p>';
+    return h;
+  }
+  function practica(){
+    var t = T[lang], bank = D.practica || [], N = bank.length;
+    var h = '<section class="chap pr" id="pr"><div class="rail"><span class="rn">5</span>'+t.pr+'</div><div class="col"><h2>'+t.prh+'</h2><p>'+t.prp+'</p>';
+    if (!N) return h + '<p class="estado">'+t.prNone+'</p></div></section>';
+    var d0 = new Date(D.practica_desde + 'T00:00:00'), hoy = new Date(); hoy.setHours(0,0,0,0);
+    var dia = Math.max(0, Math.round((hoy - d0) / 864e5));
+    var setDe = function(d){ var out = []; for (var k = 0; k < 5 && k < N; k++) out.push(bank[(d * 5 + k) % N]); return out; };
+    var hoyQ = setDe(dia), fecha = hoy.toLocaleDateString(lang === 'en' ? 'en-US' : 'es-MX', { day:'numeric', month:'short' });
+    h += '<div class="pr-head"><span class="pr-score" id="pr-score"></span><button type="button" class="mini" id="pr-reset">'+t.prReset+'</button></div>';
+    h += '<div id="pr-hoy"><h3>'+t.prDia+' '+(dia+1)+' · '+esc(fecha)+'</h3>'+hoyQ.map(mcCard).join('')+'</div>';
+    if (dia > 0) {
+      h += '<details class="pr-prev"><summary>'+t.prPrev+'</summary>';
+      for (var d = dia - 1; d >= Math.max(0, dia - 14); d--) { var f = new Date(d0.getTime() + d * 864e5).toLocaleDateString(lang === 'en' ? 'en-US' : 'es-MX', { day:'numeric', month:'short' }); h += '<h3>'+t.prDia+' '+(d+1)+' · '+esc(f)+'</h3>'+setDe(d).map(mcCard).join(''); }
+      h += '</details>';
+    }
     return h + '</div></section>';
   }
-  function siguiente(){
-    var t = T[lang], r = D.resumenes || [];
-    var h = '<section class="chap" id="next"><div class="rail"><span class="rn">→</span>'+t.next+'</div><div class="col"><h2>'+t.nexth+'</h2>';
-    h += '<h3>'+t.resumenes+'</h3>';
-    if (!r.length) h += '<p class="estado">'+t.nores+'</p>';
-    r.slice().reverse().forEach(function(x){ h += '<div class="resumen"><div class="meta">'+t.sesion+' '+x.n+' · '+esc(x.fecha)+' · '+L(x.tema)+'</div>'+esc(L(x.resumen))+'</div>'; });
-    var n = D.secciones.filter(function(s){ return s.id === 'next'; })[0];
-    if (n) h += n.blocks.filter(function(b){ return b.k !== 'h2'; }).map(block).join('');
-    h += '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
-    return h + '</div></section>';
+  function wirePractica(){
+    var t = T[lang], bank = {}; (D.practica || []).forEach(function(q){ bank[q.id] = q; });
+    function score(){ var r = {}; try { r = JSON.parse(LS('ison-mc') || '{}'); } catch(e){} var n = 0, a = 0; Object.keys(r).forEach(function(id){ if (bank[id]) { n++; if (r[id] === bank[id].correcta) a++; } }); var el = document.getElementById('pr-score'); if (el) el.textContent = n ? t.prScore(a, n) : ''; }
+    score();
+    document.querySelectorAll('.mc').forEach(function(card){
+      card.addEventListener('click', function(ev){
+        var b = ev.target.closest('.opt'); if (!b || card.classList.contains('done')) return;
+        var q = bank[card.getAttribute('data-q')], k = b.getAttribute('data-k'), e = (lang === 'en' && q.en) ? q.en : q;
+        var r = {}; try { r = JSON.parse(LS('ison-mc') || '{}'); } catch(err){} r[q.id] = k; LS('ison-mc', JSON.stringify(r));
+        card.classList.add('done');
+        card.querySelectorAll('.opt').forEach(function(o){ var kk = o.getAttribute('data-k'); o.classList.toggle('ok', kk === q.correcta); o.classList.toggle('bad', kk === k && k !== q.correcta); });
+        card.querySelector('.why').innerHTML = mcWhy(q, e, k);
+        score();
+      });
+    });
+    var rs = document.getElementById('pr-reset'); if (rs) rs.addEventListener('click', function(){ LS('ison-mc', '{}'); render(); });
   }
   function render(){
     var t = T[lang];
     document.documentElement.lang = lang;
     var caps = D.secciones.filter(function(s){ return s.id !== 'next'; });
-    var toc = caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') +
-      '<span class="sep"></span><a href="#mem">'+t.mem+'</a><a href="#preg">'+t.preg+'</a>' +
-      '<span class="right"><span class="lang"><button type="button" data-lang="es" class="'+(lang==='es'?'on':'')+'">ES</button><button type="button" data-lang="en" class="'+(lang==='en'?'on':'')+'">EN</button></span>' +
-      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span>';
+    var toc = '<span class="right"><span class="lang"><button type="button" data-lang="es" class="'+(lang==='es'?'on':'')+'">ES</button><button type="button" data-lang="en" class="'+(lang==='en'?'on':'')+'">EN</button></span>' +
+      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span><span class="sep"></span><a href="#pr">'+t.pr+'</a>' +
+      caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') +
+      '<span class="sep"></span><a href="#mem">'+t.mem+'</a>';
     var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
     var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
       '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
       '<div class="howto">'+t.howto.map(function(x){ return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('')+'</div>' +
       '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
     var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
-    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + caps.map(section).join('') + mem + dudas() + siguiente();
-    wire();
+    var fin = '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
+    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + practica() + caps.map(section).join('') + mem + fin;
+    wire(); wirePractica();
   }
 
   function wire(){
@@ -300,17 +349,6 @@
         document.getElementById(b.getAttribute('data-toggle-all')).querySelectorAll('details').forEach(function(q){ q.open = open; });
         b.textContent = open ? t.hideall : t.showall;
       });
-    });
-    // Dudas de colegas → webhook local (n8n) → el agente las publica.
-    var f = document.getElementById('f-duda'), fe = document.getElementById('d-estado');
-    f.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      if (f.sitio.value) return; // honeypot
-      var btn = f.querySelector('button[type=submit]'); btn.disabled = true; fe.className = 'estado'; fe.textContent = t.enviando;
-      fetch(WEBHOOK + 'ison-preguntas', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ nombre: f.nombre.value.trim(), capitulo: f.capitulo.value, pregunta: f.pregunta.value.trim(), lang: lang }) })
-        .then(function(r){ if (!r.ok) throw new Error(r.status); fe.className = 'estado ok'; fe.textContent = t.enviado; f.pregunta.value = ''; })
-        .catch(function(){ fe.className = 'estado err'; fe.textContent = t.errEnvio; })
-        .then(function(){ btn.disabled = false; });
     });
     // Edición: solo con PIN guardado en este dispositivo; el agente lo verifica.
     if (LS('ison-pin')) document.body.classList.add('puede-editar');
