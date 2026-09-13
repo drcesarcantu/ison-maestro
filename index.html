@@ -55,9 +55,14 @@
   .toc{
     position:sticky; top:0; z-index:5; background:var(--ground); border-bottom:1px solid var(--rule);
     margin:0 calc(-1 * clamp(1rem,4vw,3rem)); padding:.55rem clamp(1rem,4vw,3rem);
-    display:flex; gap:.4rem; align-items:center; overflow-x:auto; scrollbar-width:none;
+    display:flex; gap:.4rem; align-items:center; overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--accent-line) transparent;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 2.5rem),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 2.5rem),transparent);
   }
-  .toc::-webkit-scrollbar{display:none}
+  .toc::-webkit-scrollbar{height:4px} .toc::-webkit-scrollbar-thumb{background:var(--accent-line); border-radius:2px}
+  @media (min-width:700px){
+    .toc{flex-wrap:wrap; overflow:visible; -webkit-mask-image:none; mask-image:none; row-gap:.4rem}
+    .toc .right{position:static; box-shadow:none}
+  }
   .toc a, .toc button{
     font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; white-space:nowrap; line-height:1.2;
     padding:.34rem .6rem; border-radius:3px; border:1px solid var(--rule); color:var(--ink-soft);
