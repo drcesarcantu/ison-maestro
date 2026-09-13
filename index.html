@@ -133,6 +133,7 @@
   body.repaso section.chap .col > :not(h2):not(.ess):not(.quiz){display:none}
   body.repaso section.chap.mem .col > *, body.repaso section.chap.preg .col > *{display:block}
   body.repaso header.top .legend, body.repaso header.top .howto, body.repaso header.top .scroll{display:none}
+  details.big.libro{margin:2rem 0 0}
 
   /* ── Preguntas (dudas) ──────────────────────────────────────────── */
   .duda{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:.9rem 1.1rem; margin:.8rem 0; font-size:.95rem}
@@ -179,6 +180,27 @@
   .pr-prev{margin-top:1.4rem} .pr-prev summary{cursor:pointer; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--muted); padding:.4rem 0}
   body.repaso section.chap.pr .col > *{display:block}
 
+  /* ── Resumen del libro (desplegable) y transcripciones ─────────── */
+  details.big{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--muted); border-radius:0 6px 6px 0; margin:1.2rem 0}
+  details.big > summary{cursor:pointer; list-style:none; padding:.9rem 1.1rem; font-family:var(--mono); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); display:flex; align-items:center; gap:.6rem}
+  details.big > summary::-webkit-details-marker{display:none}
+  details.big > summary::before{content:"▸"; color:var(--accent)} details.big[open] > summary::before{content:"▾"}
+  details.big > summary .sub{margin-left:auto; font-size:.66rem; color:var(--muted); letter-spacing:.06em; text-transform:none}
+  details.big > .body{padding:.2rem 1.1rem 1.1rem; border-top:1px solid var(--rule-soft)}
+  .libro h2{font-family:var(--display); font-size:1.4rem; margin:1.4rem 0 .6rem} .libro h3{font-size:1.1rem; margin:1.6rem 0 .6rem; color:var(--accent)} .libro h4{font-size:1rem; margin:1.2rem 0 .5rem} .libro h5{font-size:.95rem; margin:1rem 0 .4rem}
+  .libro hr{border:0; border-top:1px solid var(--rule); margin:1.4rem 0} .libro code{font-family:var(--mono); font-size:.85em; background:var(--sunken); padding:.05rem .3rem; border-radius:3px}
+  .clase{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:0 0 1rem}
+  .clase .meta{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:.3rem}
+  .clase .tema{font-size:1.02rem; font-weight:600; margin:0 0 .6rem}
+  .tr-tools{display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:.6rem 0}
+  .tr-tools input{flex:1 1 12rem; font:inherit; font-size:.9rem; padding:.45rem .6rem; border:1px solid var(--rule); border-radius:4px; background:var(--ground); color:var(--ink)}
+  .tr{max-height:70vh; overflow:auto; border:1px solid var(--rule-soft); border-radius:4px; background:var(--ground); padding:.4rem .6rem; font-size:.88rem; line-height:1.5}
+  .tr .ln{display:grid; grid-template-columns:5.2rem 1fr; gap:.5rem; padding:.12rem 0; border-bottom:1px solid var(--rule-soft)}
+  .tr .ln .t{font-family:var(--mono); font-size:.72rem; color:var(--accent); font-variant-numeric:tabular-nums}
+  .tr .ln.hit{background:var(--accent-soft)}
+  .tr .parte{font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:.6rem 0 .3rem}
+  body.repaso section.chap.cl .col > *{display:block}
+
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
   .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
@@ -215,7 +237,8 @@
          repaso:'Solo repaso', verTodo:'Ver todo', editar:'Editar', pin:'PIN de edición:', editHint:'Toca cualquier texto para corregirlo. Se manda al agente y lo publica en unos minutos.', guardando:'Mandando…', guardado:'Cambios enviados. Se publican en unos minutos.', nocambios:'No hay cambios.', errGuardar:'No se pudo mandar. Revisa la conexión o el PIN.',
          footer:'Fuentes: manual de Possover (caps. I–VI) · notas de cada sesión con minuto de la grabación · se actualiza solo después de cada webinar · repaso diario en Telegram · generado ',
          sesion:'Sesión', tema:'Tema',
-         pr:'Práctica', prh:'Las 5 de hoy', prp:'Cada día suben 5 preguntas nuevas de opción múltiple, del banco que crece con cada clase. Contesta y se desglosa cada opción: por qué sí y por qué no. Las de días anteriores quedan abajo.', prDia:'Día', prScore:function(a,n){ return a+' de '+n+' correctas'; }, prOk:'✅ Correcta', prBad:'❌ Incorrecta', prPrev:'Ver días anteriores', prReset:'Reiniciar mis respuestas', prNone:'Todavía no hay preguntas en el banco.', prCap:'cap.' },
+         pr:'Práctica', prh:'Las 5 de hoy', prp:'Cada día suben 5 preguntas nuevas de opción múltiple, del banco que crece con cada clase. Contesta y se desglosa cada opción: por qué sí y por qué no. Las de días anteriores quedan abajo.', prDia:'Día', prScore:function(a,n){ return a+' de '+n+' correctas'; }, prOk:'✅ Correcta', prBad:'❌ Incorrecta', prPrev:'Ver días anteriores', prReset:'Reiniciar mis respuestas', prNone:'Todavía no hay preguntas en el banco.', prCap:'cap.',
+         libro:'Resumen libro', libroSub:'Neuropelveology · Possover · caps. I–VI, completo', libroFalta:'La versión en inglés se está generando; mientras, se muestra en español.', cl:'Clases', clh:'Cada clase, con su transcripción minuto a minuto', clp:'Transcripción automática (Whisper) de la grabación, en el idioma de la clase (inglés). Se carga al abrir. Los minutos coinciden con los que citan las notas; si OBS se reinició hay más de una parte y el reloj vuelve a cero en cada una.', trAbrir:'Transcripción completa · minuto a minuto', trBuscar:'Buscar en la transcripción…', trCargando:'Cargando…', trError:'No se pudo cargar la transcripción.', trParte:'Parte', trLineas:'líneas', trInicio:'grabación iniciada' },
     en:{ title:'Possover’s book, corrected by Possover',
          deck:'The manual gives the exam its base; the class nuances it, updates it and sometimes contradicts it. Here they go together, chapter by chapter, with a mark for where each thing comes from.',
          eyebrow:function(n,t){ return 'Living document · sessions '+n+' of '+t+' integrated · exam Nov 22, 2026 · '; },
@@ -230,7 +253,8 @@
          repaso:'Review only', verTodo:'Show all', editar:'Edit', pin:'Edit PIN:', editHint:'Tap any text to correct it. It is sent to the agent and published within minutes.', guardando:'Sending…', guardado:'Changes sent. They will be published in a few minutes.', nocambios:'No changes.', errGuardar:'Could not send. Check the connection or the PIN.',
          footer:'Sources: Possover’s manual (chs. I–VI) · notes of each session with recording timestamps · updates itself after each webinar · daily review on Telegram · generated ',
          sesion:'Session', tema:'Topic',
-         pr:'Practice', prh:'Today\u2019s five', prp:'Five new multiple-choice questions go up every day, from a bank that grows with each class. Answer and every option is explained: why yes and why not. Previous days stay below.', prDia:'Day', prScore:function(a,n){ return a+' of '+n+' correct'; }, prOk:'✅ Correct', prBad:'❌ Incorrect', prPrev:'See previous days', prReset:'Reset my answers', prNone:'No questions in the bank yet.', prCap:'ch.' }
+         pr:'Practice', prh:'Today\u2019s five', prp:'Five new multiple-choice questions go up every day, from a bank that grows with each class. Answer and every option is explained: why yes and why not. Previous days stay below.', prDia:'Day', prScore:function(a,n){ return a+' of '+n+' correct'; }, prOk:'✅ Correct', prBad:'❌ Incorrect', prPrev:'See previous days', prReset:'Reset my answers', prNone:'No questions in the bank yet.', prCap:'ch.',
+         libro:'Book summary', libroSub:'Neuropelveology · Possover · chs. I–VI, complete', libroFalta:'The English version is being generated; Spanish is shown meanwhile.', cl:'Classes', clh:'Each class, with its minute-by-minute transcript', clp:'Automatic transcript (Whisper) of the recording, in the language of the class (English). Loads on open. Timestamps match the ones cited in the notes; if OBS restarted there is more than one part and the clock resets in each.', trAbrir:'Full transcript · minute by minute', trBuscar:'Search the transcript…', trCargando:'Loading…', trError:'Could not load the transcript.', trParte:'Part', trLineas:'lines', trInicio:'recording started' }
   };
   var lang = LS('ison-lang') || 'es';
   var app = document.getElementById('app');
@@ -311,14 +335,55 @@
     });
     var rs = document.getElementById('pr-reset'); if (rs) rs.addEventListener('click', function(){ LS('ison-mc', '{}'); render(); });
   }
+  function libroSec(){
+    var t = T[lang], L2 = D.libro || {}, html = L2[lang] || L2.es || '';
+    if (!html) return '';
+    return '<details class="big libro" id="libro"><summary>📕 '+t.libro+'<span class="sub">'+t.libroSub+'</span></summary><div class="body">'+(lang === 'en' && !L2.en ? '<p class="estado">'+t.libroFalta+'</p>' : '')+html+'</div></details>';
+  }
+  function clasesSec(){
+    var t = T[lang], cl = D.clases || [];
+    if (!cl.length) return '';
+    var h = '<section class="chap cl" id="cl"><div class="rail"><span class="rn">🎙</span>'+t.cl+'</div><div class="col"><h2>'+t.clh+'</h2><p>'+t.clp+'</p>';
+    cl.forEach(function(c){
+      h += '<div class="clase"><div class="meta">'+t.sesion+' '+c.n+' · '+esc(c.fecha)+'</div><p class="tema">'+L(c.tema)+'</p>' +
+           '<details class="big" data-tr="'+c.n+'"><summary>'+t.trAbrir+'<span class="sub">'+c.partes.length+' '+(c.partes.length > 1 ? (lang==='en'?'parts':'partes') : (lang==='en'?'part':'parte'))+'</span></summary><div class="body">' +
+           '<div class="tr-tools"><input type="search" placeholder="'+t.trBuscar+'" data-buscar="'+c.n+'"><span class="estado" data-est="'+c.n+'"></span></div><div class="tr" data-cuerpo="'+c.n+'">'+t.trCargando+'</div></div></details></div>';
+    });
+    return h + '</div></section>';
+  }
+  function wireClases(){
+    var t = T[lang], cl = {}; (D.clases || []).forEach(function(c){ cl[c.n] = c; });
+    document.querySelectorAll('details[data-tr]').forEach(function(d){
+      d.addEventListener('toggle', function(){
+        if (!d.open || d.getAttribute('data-ok')) return;
+        var n = d.getAttribute('data-tr'), c = cl[n], cuerpo = d.querySelector('[data-cuerpo]'), est = d.querySelector('[data-est]');
+        Promise.all(c.partes.map(function(p){ return fetch(p.archivo).then(function(r){ if (!r.ok) throw new Error(r.status); return r.text(); }); }))
+          .then(function(textos){
+            var h = '', total = 0;
+            textos.forEach(function(txt, i){
+              if (textos.length > 1) h += '<div class="parte">'+t.trParte+' '+(i+1)+' · '+t.trInicio+' '+esc(c.partes[i].inicio)+'</div>';
+              txt.split('\n').forEach(function(ln){ var m = ln.match(/^\[(\d\d:\d\d:\d\d)\]\s*(.*)$/); if (!m) return; total++; h += '<div class="ln"><span class="t">'+m[1]+'</span><span>'+esc(m[2])+'</span></div>'; });
+            });
+            cuerpo.innerHTML = h; d.setAttribute('data-ok', '1'); est.textContent = total + ' ' + t.trLineas;
+            var inp = d.querySelector('[data-buscar]'), lns = cuerpo.querySelectorAll('.ln');
+            inp.addEventListener('input', function(){
+              var q = inp.value.trim().toLowerCase(), k = 0;
+              lns.forEach(function(l){ var hit = !q || l.textContent.toLowerCase().indexOf(q) !== -1; l.style.display = hit ? '' : 'none'; l.classList.toggle('hit', !!q && hit); if (hit) k++; });
+              est.textContent = k + ' ' + t.trLineas;
+            });
+          })
+          .catch(function(){ cuerpo.innerHTML = '<span class="estado err">'+t.trError+'</span>'; });
+      });
+    });
+  }
   function render(){
     var t = T[lang];
     document.documentElement.lang = lang;
     var caps = D.secciones.filter(function(s){ return s.id !== 'next'; });
     var toc = '<span class="right"><span class="lang"><button type="button" data-lang="es" class="'+(lang==='es'?'on':'')+'">ES</button><button type="button" data-lang="en" class="'+(lang==='en'?'on':'')+'">EN</button></span>' +
-      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span><span class="sep"></span><a href="#pr">'+t.pr+'</a>' +
+      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span><span class="sep"></span><a href="#pr">'+t.pr+'</a><a href="#libro">'+t.libro+'</a>' +
       caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') +
-      '<span class="sep"></span><a href="#mem">'+t.mem+'</a>';
+      '<span class="sep"></span><a href="#cl">'+t.cl+'</a><a href="#mem">'+t.mem+'</a>';
     var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
     var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
       '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
@@ -326,8 +391,8 @@
       '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
     var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
     var fin = '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
-    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + practica() + caps.map(section).join('') + mem + fin;
-    wire(); wirePractica();
+    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + practica() + libroSec() + caps.map(section).join('') + clasesSec() + mem + fin;
+    wire(); wirePractica(); wireClases();
   }
 
   function wire(){
