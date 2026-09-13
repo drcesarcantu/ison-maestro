@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ISON Maestro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  /* Identidad del curso: ocre "aferente" sobre neutro frío con sesgo verde. */
+  :root{
+    color-scheme:light dark;
+    --ground:#EDF0EE; --surface:#FFFFFF; --sunken:#E4E8E5;
+    --ink:#141D1A; --ink-soft:#3D4B46; --muted:#65756E;
+    --rule:#D3DAD6; --rule-soft:#E2E7E4;
+    --accent:#9C6510; --accent-soft:#F5EAD7; --accent-line:#C89B4A;
+    --alert:#9A3520; --alert-soft:#F6E2DC;
+    --ok:#2F6B4F;
+    --display:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --serif:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --measure:66ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1412; --surface:#151D1A; --sunken:#1B2421;
+      --ink:#E6ECE9; --ink-soft:#BCC8C3; --muted:#8B9A94;
+      --rule:#2A3531; --rule-soft:#212B28;
+      --accent:#D9A24A; --accent-soft:#2A2317; --accent-line:#8A6A33;
+      --alert:#E08066; --alert-soft:#2E1C17; --ok:#7FBF9E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1412; --surface:#151D1A; --sunken:#1B2421;
+    --ink:#E6ECE9; --ink-soft:#BCC8C3; --muted:#8B9A94;
+    --rule:#2A3531; --rule-soft:#212B28;
+    --accent:#D9A24A; --accent-soft:#2A2317; --accent-line:#8A6A33;
+    --alert:#E08066; --alert-soft:#2E1C17; --ok:#7FBF9E;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+  body{margin:0; background:var(--ground); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.62; -webkit-text-size-adjust:100%}
+  img{max-width:100%}
+  a{color:var(--accent)}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 clamp(1rem,4vw,3rem) 6rem}
+  strong{font-weight:600} em{font-style:italic; color:var(--ink-soft)}
+  p{margin:0 0 .9rem} ul,ol{margin:0 0 1rem; padding-left:1.2rem} li{margin:.38rem 0}
+  .tc{font-family:var(--mono); font-size:.76em; color:var(--accent); white-space:nowrap}
+  .mono{font-family:var(--mono)}
+
+  /* ── Barra superior ─────────────────────────────────────────────── */
+  .toc{
+    position:sticky; top:0; z-index:5; background:var(--ground); border-bottom:1px solid var(--rule);
+    margin:0 calc(-1 * clamp(1rem,4vw,3rem)); padding:.55rem clamp(1rem,4vw,3rem);
+    display:flex; gap:.4rem; align-items:center; overflow-x:auto; scrollbar-width:none;
+  }
+  .toc::-webkit-scrollbar{display:none}
+  .toc a, .toc button{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; white-space:nowrap; line-height:1.2;
+    padding:.34rem .6rem; border-radius:3px; border:1px solid var(--rule); color:var(--ink-soft);
+    background:var(--surface); text-decoration:none; cursor:pointer;
+  }
+  .toc a.ok{border-color:var(--accent-line); color:var(--accent)} .toc a.ok::before{content:"✓ "}
+  .toc .sep{flex:0 0 1px; height:1.2rem; background:var(--rule)}
+  .toc .right{margin-left:auto; display:flex; gap:.4rem}
+  .toc button.on{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .lang{display:inline-flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden}
+  .lang button{border:0; border-radius:0} .lang button+button{border-left:1px solid var(--rule)}
+  #editar{display:none} body.puede-editar #editar{display:inline-block}
+
+  /* ── Encabezado ─────────────────────────────────────────────────── */
+  header.top{padding:clamp(2.5rem,7vw,5rem) 0 2rem; border-bottom:1px solid var(--rule)}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 1.1rem}
+  .eyebrow .count{font-variant-numeric:tabular-nums}
+  h1{font-family:var(--display); font-size:clamp(2.1rem,6vw,3.3rem); line-height:1.06; margin:0 0 1.2rem; font-weight:600; letter-spacing:-.012em; text-wrap:balance; max-width:22ch}
+  .deck{font-size:clamp(1.05rem,2.2vw,1.22rem); color:var(--ink-soft); margin:0; max-width:56ch}
+  .legend{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:.75rem; margin:2.2rem 0 0; padding:0; list-style:none}
+  .legend li{background:var(--surface); border:1px solid var(--rule); border-left-width:3px; border-radius:0 5px 5px 0; padding:.75rem .9rem; font-size:.87rem; color:var(--ink-soft)}
+  .legend li b{display:block; color:var(--ink); font-weight:600; margin-bottom:.15rem}
+  .l-manual{border-left-color:var(--muted)} .l-clase{border-left-color:var(--accent-line)} .l-conf{border-left-color:var(--alert)} .l-prac{border-left-color:var(--accent-line); background:var(--accent-soft)}
+  .howto{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.75rem; margin:1.6rem 0 0}
+  .howto div{font-size:.9rem; color:var(--ink-soft); padding:.7rem .9rem; background:var(--surface); border:1px solid var(--rule); border-radius:5px}
+  .howto b{display:block; color:var(--ink); font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.3rem}
+
+  .scroll{overflow-x:auto; margin:1.3rem 0 1.6rem; border:1px solid var(--rule); border-radius:5px; background:var(--surface)}
+  table{border-collapse:collapse; width:100%; font-size:.89rem; min-width:min(100%,460px)}
+  th,td{padding:.58rem .8rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+  thead th{font-family:var(--mono); font-size:.67rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--sunken); white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  td.root{font-family:var(--mono); font-weight:600; color:var(--accent); white-space:nowrap}
+  .st{font-family:var(--mono); font-size:.8rem; white-space:nowrap}
+
+  /* ── Capítulos ──────────────────────────────────────────────────── */
+  section.chap{display:grid; grid-template-columns:1fr; gap:.8rem; padding:3rem 0 2.4rem; border-bottom:1px solid var(--rule); scroll-margin-top:3.2rem}
+  @media (min-width:940px){ section.chap{grid-template-columns:6.5rem minmax(0,1fr); gap:2.6rem} .rail{position:sticky; top:3.2rem; align-self:start; text-align:right} }
+  .rail{font-family:var(--mono); font-size:.7rem; color:var(--muted); line-height:1.5}
+  .rail .rn{display:block; font-family:var(--display); font-size:1.9rem; line-height:1; color:var(--accent-line); letter-spacing:-.02em; margin-bottom:.35rem}
+  .col{min-width:0; max-width:var(--measure)}
+  .col > h2{font-family:var(--display); font-size:clamp(1.35rem,3vw,1.75rem); line-height:1.18; margin:0 0 1.4rem; font-weight:600; letter-spacing:-.008em; text-wrap:balance}
+  h3{font-size:1.02rem; margin:2rem 0 .7rem; font-weight:600; text-wrap:balance}
+  .src{border-left:3px solid var(--rule); padding:.15rem 0 .15rem 1.05rem; margin:1.3rem 0}
+  .src > :last-child{margin-bottom:0}
+  .src .tag{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:.45rem}
+  .src.clase{border-left-color:var(--accent-line)} .src.clase .tag{color:var(--accent)}
+  .src.conf{border-left-color:var(--alert); background:var(--alert-soft); padding:.9rem 1.1rem; border-radius:0 5px 5px 0} .src.conf .tag{color:var(--alert)}
+  .src.prac{border-left-color:var(--accent-line); background:var(--accent-soft); padding:.9rem 1.1rem; border-radius:0 5px 5px 0} .src.prac .tag{color:var(--accent)}
+  .src.mia{border-left-style:dashed; background:var(--surface)} .src.mia .tag{color:var(--ok)}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(245px,1fr)); gap:1rem; margin:1.5rem 0}
+  .card{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1.05rem 1.15rem; font-size:.92rem}
+  .card .lbl{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:.5rem}
+  .card p{margin:0; color:var(--ink-soft)}
+
+  /* ── Capa de estudio ────────────────────────────────────────────── */
+  .ess{background:var(--surface); border:1px solid var(--rule); border-top:3px solid var(--accent-line); border-radius:0 0 5px 5px; padding:.9rem 1.1rem 1rem; margin:0 0 1.8rem}
+  .ess-head, .quiz-head{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:.5rem}
+  .ess .tag, .quiz .tag, .preg .tag{font-family:var(--mono); font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--accent)}
+  .ess ol{margin:0; padding-left:1.4rem; font-size:.95rem; line-height:1.5} .ess li{margin:.42rem 0; padding-left:.15rem} .ess li::marker{font-family:var(--mono); color:var(--accent); font-size:.8em}
+  .done{font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; color:var(--muted); display:flex; align-items:center; gap:.35rem; cursor:pointer; white-space:nowrap}
+  .done input{accent-color:var(--accent); width:.95rem; height:.95rem; margin:0}
+  .ess.is-done{border-top-color:var(--accent)} .ess.is-done .done{color:var(--accent)}
+  .quiz{margin:2.2rem 0 0; padding-top:1.2rem; border-top:1px dashed var(--rule)}
+  .q{border-bottom:1px solid var(--rule-soft)}
+  .q summary{cursor:pointer; padding:.62rem .2rem .62rem 1.5rem; font-size:.97rem; list-style:none; position:relative}
+  .q summary::-webkit-details-marker{display:none}
+  .q summary::before{content:"?"; position:absolute; left:.15rem; top:.6rem; font-family:var(--mono); font-size:.78rem; color:var(--accent); width:1.05rem; text-align:center}
+  .q[open] summary::before{content:"→"}
+  .q .a{padding:.1rem .2rem .8rem 1.5rem; font-size:.92rem; color:var(--ink-soft); line-height:1.5}
+  .mini{font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; padding:.25rem .55rem; border-radius:3px; border:1px solid var(--rule); background:var(--surface); color:var(--ink-soft); cursor:pointer}
+  .nota{font-size:.85rem; color:var(--muted); margin:-.8rem 0 1.4rem}
+  body.repaso section.chap .col > :not(h2):not(.ess):not(.quiz){display:none}
+  body.repaso section.chap.mem .col > *, body.repaso section.chap.preg .col > *{display:block}
+  body.repaso header.top .legend, body.repaso header.top .howto, body.repaso header.top .scroll{display:none}
+
+  /* ── Preguntas (dudas) ──────────────────────────────────────────── */
+  .duda{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:.9rem 1.1rem; margin:.8rem 0; font-size:.95rem}
+  .duda .meta{font-family:var(--mono); font-size:.68rem; color:var(--muted); letter-spacing:.06em; margin-bottom:.35rem}
+  .duda .resp{margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--rule); color:var(--ink-soft)}
+  .duda .resp::before{content:"↳ "; color:var(--accent); font-family:var(--mono)}
+  form.nueva{background:var(--sunken); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1.4rem 0; display:grid; gap:.6rem}
+  form.nueva label{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:.25rem}
+  form.nueva input, form.nueva textarea, form.nueva select{width:100%; font:inherit; font-size:.95rem; padding:.55rem .7rem; border:1px solid var(--rule); border-radius:4px; background:var(--surface); color:var(--ink)}
+  form.nueva textarea{min-height:5.5rem; resize:vertical}
+  form.nueva .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+  .btn{font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; padding:.55rem .9rem; border-radius:3px; border:1px solid var(--rule); background:var(--surface); color:var(--ink-soft); cursor:pointer}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  .btn:disabled{opacity:.5; cursor:default}
+  .estado{font-family:var(--mono); font-size:.72rem; color:var(--muted)} .estado.err{color:var(--alert)} .estado.ok{color:var(--ok)}
+
+  /* ── Edición (solo César, con PIN) ──────────────────────────────── */
+  body.editing [contenteditable="true"]{outline:1px dashed var(--accent-line); outline-offset:6px; border-radius:2px}
+  body.editing .toc .right button:not(#guardar):not(#cancelar), body.editing .done, body.editing .mini{display:none}
+  #editbar{display:none; position:fixed; left:0; right:0; bottom:0; z-index:9; background:var(--surface); border-top:1px solid var(--rule); padding:.6rem clamp(1rem,4vw,3rem); padding-bottom:calc(.6rem + env(safe-area-inset-bottom)); gap:.5rem; align-items:center; flex-wrap:wrap; box-shadow:0 -6px 20px rgba(0,0,0,.06)}
+  body.editing #editbar{display:flex} body.editing .wrap{padding-bottom:9rem}
+  #editbar .estado{margin-left:auto}
+
+  footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
+  .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
+  .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <nav class="toc" aria-label="Capítulos"><span class="estado" id="cargando">…</span></nav>
+</div>
+<div id="editbar" role="toolbar" aria-label="Edición">
+  <button type="button" class="btn primary" id="guardar">Guardar cambios</button>
+  <button type="button" class="btn" id="cancelar">Cancelar</button>
+  <span class="estado" id="edit-estado"></span>
+</div>
+<script src="data/maestro.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = window.MAESTRO;
+  var WEBHOOK = 'https://vault-desktop.taile0387a.ts.net/webhook/';
+  var LS = function(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } };
+  var T = {
+    es:{ title:'El libro de Possover, corregido por Possover',
+         deck:'El manual da la base del examen; la clase la matiza, la actualiza y a veces la contradice. Aquí van los dos juntos, capítulo por capítulo, con la marca de dónde viene cada cosa.',
+         eyebrow:function(n,t){ return 'Documento vivo · sesiones '+n+' de '+t+' integradas · examen 22 nov 2026 · '; },
+         days:function(d){ return d>1 ? 'faltan '+d+' días' : d===1 ? 'es mañana' : d===0 ? 'es hoy' : 'examen presentado'; },
+         legend:[['📕 Manual','Del libro. Es la base del examen.','l-manual'],['🎙️ Clase','Lo que dijo en vivo y no está en el libro.','l-clase'],['⚠️ Conflicto','Libro y clase no coinciden. Hay que resolverlo.','l-conf'],['🔧 Práctica','Cambia lo que haces el lunes.','l-prac']],
+         howto:[['1 · Lee','Un capítulo por sesión de estudio, con la prosa y sus marcas de origen. Los minutos te regresan a la grabación.'],['2 · Cierra y recita','Tapa «Lo esencial» y di los puntos en voz alta. Los que no salgan, vuelve a la prosa.'],['3 · Pregúntate','Autoevaluación al final de cada capítulo: respuesta oculta hasta que la toques. Marca «Repasado» cuando salgan todas.'],['Última semana','Botón «Solo repaso»: quita la prosa y deja lo esencial, las tablas y las preguntas.']],
+         cov:['Capítulo','Reforzado en clase','Estado'], ess:'Lo esencial', pts:'puntos', done:'Repasado', quiz:'Autoevaluación', qs:'preguntas', showall:'Mostrar todas', hideall:'Ocultar todas',
+         mem:'Tablas para memorizar', memh:'Lo que se pregunta en tabla, se estudia en tabla', memp:'Todo lo de arriba, comprimido a lo que cabe en una pregunta de opción múltiple. Primera columna en ocre: es la que tapas con el dedo.',
+         preg:'Preguntas', pregh:'Dudas para el profesor y entre colegas', pregp:'Lo que no quedó claro en el libro o en clase. Possover contesta las dudas en los primeros 15 minutos de cada sesión, así que lo que se junte aquí se le manda antes del siguiente webinar. Cualquiera con el link puede dejar una.',
+         pendh:'Pendientes de César', sinpreg:'Todavía no hay dudas. Sé el primero.', tuNombre:'Tu nombre', tuPreg:'Tu duda', cap:'Capítulo', capAny:'General', enviar:'Mandar duda', enviando:'Mandando…', enviado:'Recibida. Aparece aquí en cuanto el agente la publique (máximo unos minutos).', errEnvio:'No se pudo mandar. Intenta de nuevo en un momento.', respondida:'Respuesta',
+         next:'Siguiente', nexth:'Pendientes y últimas sesiones', resumenes:'Resumen breve de cada sesión', nores:'Los resúmenes de las sesiones nuevas aparecen aquí cuando el agente las procesa.',
+         repaso:'Solo repaso', verTodo:'Ver todo', editar:'Editar', pin:'PIN de edición:', editHint:'Toca cualquier texto para corregirlo. Se manda al agente y lo publica en unos minutos.', guardando:'Mandando…', guardado:'Cambios enviados. Se publican en unos minutos.', nocambios:'No hay cambios.', errGuardar:'No se pudo mandar. Revisa la conexión o el PIN.',
+         footer:'Fuentes: manual de Possover (caps. I–VI) · notas de cada sesión con minuto de la grabación · se actualiza solo después de cada webinar · repaso diario en Telegram · generado ',
+         sesion:'Sesión', tema:'Tema' },
+    en:{ title:'Possover’s book, corrected by Possover',
+         deck:'The manual gives the exam its base; the class nuances it, updates it and sometimes contradicts it. Here they go together, chapter by chapter, with a mark for where each thing comes from.',
+         eyebrow:function(n,t){ return 'Living document · sessions '+n+' of '+t+' integrated · exam Nov 22, 2026 · '; },
+         days:function(d){ return d>1 ? d+' days left' : d===1 ? 'tomorrow' : d===0 ? 'today' : 'exam taken'; },
+         legend:[['📕 Manual','From the book. The base of the exam.','l-manual'],['🎙️ Class','What he said live and is not in the book.','l-clase'],['⚠️ Conflict','Book and class disagree. Must be resolved.','l-conf'],['🔧 Practice','Changes what you do on Monday.','l-prac']],
+         howto:[['1 · Read','One chapter per study session, prose and source marks included. The timestamps take you back to the recording.'],['2 · Close and recite','Cover “Essentials” and say the points out loud. Whatever doesn’t come out, go back to the prose.'],['3 · Test yourself','Self-test at the end of each chapter: answer hidden until you tap it. Tick “Reviewed” when they all come out.'],['Last week','“Review only” button: hides the prose and leaves essentials, tables and questions.']],
+         cov:['Chapter','Reinforced in class','Status'], ess:'Essentials', pts:'points', done:'Reviewed', quiz:'Self-test', qs:'questions', showall:'Show all', hideall:'Hide all',
+         mem:'Tables to memorize', memh:'What is asked as a table is studied as a table', memp:'Everything above, compressed to what fits in a multiple-choice question. First column in ochre: that is the one you cover with your finger.',
+         preg:'Questions', pregh:'Questions for the professor and among colleagues', pregp:'What was not clear in the book or in class. Possover answers questions in the first 15 minutes of each session, so whatever gathers here is sent to him before the next webinar. Anyone with the link can leave one.',
+         pendh:'César’s pending items', sinpreg:'No questions yet. Be the first.', tuNombre:'Your name', tuPreg:'Your question', cap:'Chapter', capAny:'General', enviar:'Send question', enviando:'Sending…', enviado:'Received. It appears here as soon as the agent publishes it (a few minutes at most).', errEnvio:'Could not send. Try again in a moment.', respondida:'Answer',
+         next:'Next', nexth:'Pending items and latest sessions', resumenes:'Brief summary of each session', nores:'Summaries of new sessions appear here when the agent processes them.',
+         repaso:'Review only', verTodo:'Show all', editar:'Edit', pin:'Edit PIN:', editHint:'Tap any text to correct it. It is sent to the agent and published within minutes.', guardando:'Sending…', guardado:'Changes sent. They will be published in a few minutes.', nocambios:'No changes.', errGuardar:'Could not send. Check the connection or the PIN.',
+         footer:'Sources: Possover’s manual (chs. I–VI) · notes of each session with recording timestamps · updates itself after each webinar · daily review on Telegram · generated ',
+         sesion:'Session', tema:'Topic' }
+  };
+  var lang = LS('ison-lang') || 'es';
+  var app = document.getElementById('app');
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var L = function(o){ return (o && typeof o === 'object' && !Array.isArray(o)) ? (o[lang] || o.es || '') : o; };
+
+  function block(b){
+    if (b.k === 'h2') return '<h2 data-id="'+b.id+'">'+L(b)+'</h2>';
+    if (b.k === 'h3') return '<h3 data-id="'+b.id+'">'+L(b)+'</h3>';
+    if (b.k === 'p')  return '<p data-id="'+b.id+'">'+L(b)+'</p>';
+    if (b.k === 'src') return '<div class="src '+(b.cls==='manual'?'':esc(b.cls))+'"><span class="tag">'+L(b.tag)+'</span><div data-id="'+b.id+'">'+L(b)+'</div></div>';
+    if (b.k === 'cards') return '<div class="cards">'+L(b).map(function(c){ return '<div class="card"><span class="lbl">'+c[0]+'</span><p>'+c[1]+'</p></div>'; }).join('')+'</div>';
+    return '';
+  }
+  function tabla(t){
+    var h = t.heads[lang] || t.heads.es, rows = t.rows[lang] || t.rows.es, nota = L(t.nota);
+    return '<h3>'+L(t.titulo)+'</h3><div class="scroll"><table><thead><tr>'+h.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+
+      rows.map(function(r){ return '<tr>'+r.map(function(c,i){ return i===0 ? '<td class="root">'+c+'</td>' : '<td>'+c+'</td>'; }).join('')+'</tr>'; }).join('')+'</tbody></table></div>'+(nota ? '<p class="nota">'+nota+'</p>' : '');
+  }
+  function section(s){
+    var t = T[lang], ess = s.esencial && s.esencial[lang] || [], quiz = s.quiz && s.quiz[lang] || [];
+    var h = '<section class="chap" id="'+s.id+'"><div class="rail"><span class="rn">'+esc(s.rn)+'</span>'+L(s.rail)+'</div><div class="col">';
+    var blocks = s.blocks.slice(), h2 = blocks.length && blocks[0].k === 'h2' ? blocks.shift() : null;
+    if (h2) h += block(h2);
+    if (ess.length) h += '<div class="ess" id="'+s.id+'-ess"><div class="ess-head"><span class="tag">'+t.ess+' · '+ess.length+' '+t.pts+'</span><label class="done"><input type="checkbox" data-done="'+s.id+'"> '+t.done+'</label></div><ol>'+ess.map(function(x,i){ return '<li data-id="'+s.id+'-e'+(i+1)+'">'+x+'</li>'; }).join('')+'</ol></div>';
+    h += blocks.map(block).join('');
+    if (quiz.length) h += '<div class="quiz" id="'+s.id+'-quiz"><div class="quiz-head"><span class="tag">'+t.quiz+' · '+quiz.length+' '+t.qs+'</span><button type="button" class="mini" data-toggle-all="'+s.id+'-quiz">'+t.showall+'</button></div>'+quiz.map(function(q){ return '<details class="q"><summary>'+q[0]+'</summary><div class="a">'+q[1]+'</div></details>'; }).join('')+'</div>';
+    return h + '</div></section>';
+  }
+  function dudas(){
+    var t = T[lang], p = D.preguntas || [];
+    var h = '<section class="chap preg" id="preg"><div class="rail"><span class="rn">?</span>'+t.preg+'</div><div class="col"><h2>'+t.pregh+'</h2><p>'+t.pregp+'</p>';
+    h += '<form class="nueva" id="f-duda" autocomplete="off"><div><label for="d-nombre">'+t.tuNombre+'</label><input id="d-nombre" name="nombre" maxlength="60" required></div>'+
+         '<div><label for="d-cap">'+t.cap+'</label><select id="d-cap" name="capitulo"><option value="">'+t.capAny+'</option>'+D.secciones.filter(function(s){ return s.toc; }).map(function(s){ return '<option value="'+s.id+'">'+L(s.toc)+'</option>'; }).join('')+'</select></div>'+
+         '<div><label for="d-texto">'+t.tuPreg+'</label><textarea id="d-texto" name="pregunta" maxlength="600" required></textarea></div>'+
+         '<div class="hp" aria-hidden="true"><label>Sitio</label><input name="sitio" tabindex="-1"></div>'+
+         '<div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><button type="submit" class="btn primary">'+t.enviar+'</button><span class="estado" id="d-estado"></span></div></form>';
+    if (!p.length) h += '<p class="estado">'+t.sinpreg+'</p>';
+    p.slice().reverse().forEach(function(d){
+      var sec = D.secciones.filter(function(s){ return s.id === d.capitulo; })[0];
+      h += '<div class="duda"><div class="meta">'+esc(d.nombre)+' · '+esc(d.fecha)+(sec ? ' · '+L(sec.toc) : '')+'</div>'+esc(d.pregunta)+(d.respuesta ? '<div class="resp">'+esc(L(d.respuesta))+'</div>' : '')+'</div>';
+    });
+    var pend = D.pendientes && D.pendientes[lang] || [];
+    if (pend.length) h += '<h3>'+t.pendh+'</h3><ul>'+pend.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ul>';
+    return h + '</div></section>';
+  }
+  function siguiente(){
+    var t = T[lang], r = D.resumenes || [];
+    var h = '<section class="chap" id="next"><div class="rail"><span class="rn">→</span>'+t.next+'</div><div class="col"><h2>'+t.nexth+'</h2>';
+    h += '<h3>'+t.resumenes+'</h3>';
+    if (!r.length) h += '<p class="estado">'+t.nores+'</p>';
+    r.slice().reverse().forEach(function(x){ h += '<div class="resumen"><div class="meta">'+t.sesion+' '+x.n+' · '+esc(x.fecha)+' · '+L(x.tema)+'</div>'+esc(L(x.resumen))+'</div>'; });
+    var n = D.secciones.filter(function(s){ return s.id === 'next'; })[0];
+    if (n) h += n.blocks.filter(function(b){ return b.k !== 'h2'; }).map(block).join('');
+    h += '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
+    return h + '</div></section>';
+  }
+  function render(){
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    var caps = D.secciones.filter(function(s){ return s.id !== 'next'; });
+    var toc = caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') +
+      '<span class="sep"></span><a href="#mem">'+t.mem+'</a><a href="#preg">'+t.preg+'</a>' +
+      '<span class="right"><span class="lang"><button type="button" data-lang="es" class="'+(lang==='es'?'on':'')+'">ES</button><button type="button" data-lang="en" class="'+(lang==='en'?'on':'')+'">EN</button></span>' +
+      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span>';
+    var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
+    var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
+      '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
+      '<div class="howto">'+t.howto.map(function(x){ return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('')+'</div>' +
+      '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
+    var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
+    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + caps.map(section).join('') + mem + dudas() + siguiente();
+    wire();
+  }
+
+  function wire(){
+    var t = T[lang];
+    document.querySelectorAll('[data-lang]').forEach(function(b){ b.addEventListener('click', function(){ lang = b.getAttribute('data-lang'); LS('ison-lang', lang); render(); }); });
+    var modo = document.getElementById('modo');
+    function setModo(on){ document.body.classList.toggle('repaso', on); modo.classList.toggle('on', on); modo.textContent = on ? t.verTodo : t.repaso; LS('ison-repaso', on ? '1' : '0'); }
+    modo.addEventListener('click', function(){ setModo(!document.body.classList.contains('repaso')); });
+    setModo(LS('ison-repaso') === '1');
+    document.querySelectorAll('input[data-done]').forEach(function(cb){
+      var id = cb.getAttribute('data-done');
+      var paint = function(){ cb.closest('.ess').classList.toggle('is-done', cb.checked); var a = document.querySelector('.toc a[data-toc="'+id+'"]'); if (a) a.classList.toggle('ok', cb.checked); };
+      cb.checked = LS('ison-done-'+id) === '1'; paint();
+      cb.addEventListener('change', function(){ LS('ison-done-'+id, cb.checked ? '1' : '0'); paint(); });
+    });
+    document.querySelectorAll('[data-toggle-all]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var open = b.textContent === t.showall;
+        document.getElementById(b.getAttribute('data-toggle-all')).querySelectorAll('details').forEach(function(q){ q.open = open; });
+        b.textContent = open ? t.hideall : t.showall;
+      });
+    });
+    // Dudas de colegas → webhook local (n8n) → el agente las publica.
+    var f = document.getElementById('f-duda'), fe = document.getElementById('d-estado');
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      if (f.sitio.value) return; // honeypot
+      var btn = f.querySelector('button[type=submit]'); btn.disabled = true; fe.className = 'estado'; fe.textContent = t.enviando;
+      fetch(WEBHOOK + 'ison-preguntas', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ nombre: f.nombre.value.trim(), capitulo: f.capitulo.value, pregunta: f.pregunta.value.trim(), lang: lang }) })
+        .then(function(r){ if (!r.ok) throw new Error(r.status); fe.className = 'estado ok'; fe.textContent = t.enviado; f.pregunta.value = ''; })
+        .catch(function(){ fe.className = 'estado err'; fe.textContent = t.errEnvio; })
+        .then(function(){ btn.disabled = false; });
+    });
+    // Edición: solo con PIN guardado en este dispositivo; el agente lo verifica.
+    if (LS('ison-pin')) document.body.classList.add('puede-editar');
+    document.getElementById('editar').addEventListener('click', function(){ setEdit(true); });
+    if (location.hash === '#editar' && !LS('ison-pin')) { var p = prompt(t.pin); if (p) { LS('ison-pin', p.trim()); document.body.classList.add('puede-editar'); } }
+  }
+
+  var originales = {};
+  function setEdit(on){
+    var t = T[lang], est = document.getElementById('edit-estado');
+    if (on && document.body.classList.contains('repaso')) document.getElementById('modo').click();
+    document.body.classList.toggle('editing', on);
+    document.querySelectorAll('[data-id]').forEach(function(e){
+      if (on) { originales[e.getAttribute('data-id')] = e.innerHTML; e.setAttribute('contenteditable', 'true'); }
+      else e.removeAttribute('contenteditable');
+    });
+    est.className = 'estado'; est.textContent = on ? t.editHint : '';
+  }
+  document.getElementById('cancelar').addEventListener('click', function(){ render(); setEdit(false); });
+  document.getElementById('guardar').addEventListener('click', function(){
+    var t = T[lang], est = document.getElementById('edit-estado'), cambios = [];
+    document.querySelectorAll('[data-id]').forEach(function(e){ var id = e.getAttribute('data-id'); if (e.innerHTML !== originales[id]) cambios.push({ id: id, lang: lang, html: e.innerHTML }); });
+    if (!cambios.length) { est.textContent = t.nocambios; return; }
+    var b = this; b.disabled = true; est.className = 'estado'; est.textContent = t.guardando;
+    fetch(WEBHOOK + 'ison-ediciones', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ pin: LS('ison-pin'), ediciones: cambios }) })
+      .then(function(r){ if (!r.ok) throw new Error(r.status); est.className = 'estado ok'; est.textContent = t.guardado; setTimeout(function(){ setEdit(false); }, 1500); })
+      .catch(function(){ est.className = 'estado err'; est.textContent = t.errGuardar; })
+      .then(function(){ b.disabled = false; });
+  });
+
+  if (!D) { document.getElementById('cargando').textContent = 'No cargó data/maestro.js'; return; }
+  render();
+})();
+</script>
+</body>
+</html>
