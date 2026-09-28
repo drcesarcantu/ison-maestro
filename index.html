@@ -209,6 +209,11 @@
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
   .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
+.lams{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0}
+.lams a{display:block;border-radius:8px;overflow:hidden;border:1px solid rgba(128,128,128,.28);background:rgba(128,128,128,.06)}
+.lams img{width:100%;height:auto;display:block}
+.lams a:hover{border-color:currentColor}
+@media(max-width:600px){.lams{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
 </style>
 </head>
 <body>
@@ -345,13 +350,20 @@
     if (!html) return '';
     return '<details class="big libro" id="libro"><summary>📕 '+t.libro+'<span class="sub">'+t.libroSub+'</span></summary><div class="body">'+(lang === 'en' && !L2.en ? '<p class="estado">'+t.libroFalta+'</p>' : '')+html+'</div></details>';
   }
+  var LAM = {};
+  // 28-sep-2026 (Cesar: "con todo y tablas y fotos de las slides tambien para estudiar"):
+  // las laminas de Possover salieron de los PDF de los apuntes de clase, en webp a 1400 px.
+  fetch('data/laminas.json').then(function(r){ return r.ok ? r.json() : {}; })
+    .then(function(j){ LAM = j || {}; if (window.D && window.D.clases) render(); })
+    .catch(function(){});
+
   function clasesSec(){
     var t = T[lang], cl = D.clases || [];
     if (!cl.length) return '';
     var h = '<section class="chap cl" id="cl"><div class="rail"><span class="rn">🎙</span>'+t.cl+'</div><div class="col"><h2>'+t.clh+'</h2><p>'+t.clp+'</p>';
     cl.forEach(function(c){
       h += '<div class="clase"><div class="meta">'+t.sesion+' '+c.n+' · '+esc(c.fecha)+'</div><p class="tema">'+L(c.tema)+'</p>' +
-           '<details class="big" data-tr="'+c.n+'"><summary>'+t.trAbrir+'<span class="sub">'+c.partes.length+' '+(c.partes.length > 1 ? (lang==='en'?'parts':'partes') : (lang==='en'?'part':'parte'))+'</span></summary><div class="body">' +
+           (LAM[c.n] ? '<details class="big lam"><summary>'+(lang==='en'?'Slides from the class':'Láminas de la clase')+'<span class="sub">'+LAM[c.n].length+'</span></summary><div class="body"><div class="lams">'+LAM[c.n].map(function(x){return '<a href="data/laminas/s'+c.n+'/'+x.f+'" target="_blank" rel="noopener"><img loading="lazy" src="data/laminas/s'+c.n+'/'+x.f+'" alt="'+(lang==='en'?'Slide':'Lámina')+' '+x.p+'"></a>';}).join('')+'</div></div></details>' : '') + '<details class="big" data-tr="'+c.n+'"><summary>'+t.trAbrir+'<span class="sub">'+c.partes.length+' '+(c.partes.length > 1 ? (lang==='en'?'parts':'partes') : (lang==='en'?'part':'parte'))+'</span></summary><div class="body">' +
            '<div class="tr-tools"><input type="search" placeholder="'+t.trBuscar+'" data-buscar="'+c.n+'"><span class="estado" data-est="'+c.n+'"></span></div><div class="tr" data-cuerpo="'+c.n+'">'+t.trCargando+'</div></div></details></div>';
     });
     return h + '</div></section>';
