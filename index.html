@@ -209,11 +209,15 @@
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
   .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
-.lams{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0}
-.lams a{display:block;border-radius:8px;overflow:hidden;border:1px solid rgba(128,128,128,.28);background:rgba(128,128,128,.06)}
-.lams img{width:100%;height:auto;display:block}
-.lams a:hover{border-color:currentColor}
-@media(max-width:600px){.lams{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+.lams{display:flex;flex-direction:column;gap:26px;margin:10px 0}
+.lam1{margin:0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+.lam1 a{display:block;border-radius:9px;overflow:hidden;border:1px solid rgba(128,128,128,.3);background:rgba(128,128,128,.06)}
+.lam1 img{width:100%;height:auto;display:block}
+.lam1 a:hover{border-color:currentColor}
+.lam1 figcaption{font-size:.94em;line-height:1.55}
+.lam1 figcaption b{display:block;margin-bottom:7px}
+.lam1 figcaption span{display:block;opacity:.86}
+@media(max-width:820px){.lam1{grid-template-columns:1fr;gap:9px}}
 </style>
 </head>
 <body>
@@ -363,7 +367,7 @@
     var h = '<section class="chap cl" id="cl"><div class="rail"><span class="rn">🎙</span>'+t.cl+'</div><div class="col"><h2>'+t.clh+'</h2><p>'+t.clp+'</p>';
     cl.forEach(function(c){
       h += '<div class="clase"><div class="meta">'+t.sesion+' '+c.n+' · '+esc(c.fecha)+'</div><p class="tema">'+L(c.tema)+'</p>' +
-           (LAM[c.n] ? '<details class="big lam"><summary>'+(lang==='en'?'Slides from the class':'Láminas de la clase')+'<span class="sub">'+LAM[c.n].length+'</span></summary><div class="body"><div class="lams">'+LAM[c.n].map(function(x){return '<a href="data/laminas/s'+c.n+'/'+x.f+'" target="_blank" rel="noopener"><img loading="lazy" src="data/laminas/s'+c.n+'/'+x.f+'" alt="'+(lang==='en'?'Slide':'Lámina')+' '+x.p+'"></a>';}).join('')+'</div></div></details>' : '') + '<details class="big" data-tr="'+c.n+'"><summary>'+t.trAbrir+'<span class="sub">'+c.partes.length+' '+(c.partes.length > 1 ? (lang==='en'?'parts':'partes') : (lang==='en'?'part':'parte'))+'</span></summary><div class="body">' +
+           (LAM[c.n] ? '<details class="big lam"><summary>'+(lang==='en'?'Slides from the class':'Láminas de la clase')+'<span class="sub">'+LAM[c.n].length+'</span></summary><div class="body"><div class="lams">'+LAM[c.n].map(function(x){return '<figure class="lam1"><a href="data/laminas/s'+c.n+'/'+x.f+'" target="_blank" rel="noopener"><img loading="lazy" src="data/laminas/s'+c.n+'/'+x.f+'" alt="'+esc(x.t||((lang==="en"?"Slide":"Lámina")+" "+x.p))+'"></a><figcaption>'+(x.t?'<b>'+esc(x.t)+'</b>':'')+(x.x?'<span>'+esc(x.x)+'</span>':'')+'</figcaption></figure>';}).join('')+'</div></div></details>' : '') + '<details class="big" data-tr="'+c.n+'"><summary>'+t.trAbrir+'<span class="sub">'+c.partes.length+' '+(c.partes.length > 1 ? (lang==='en'?'parts':'partes') : (lang==='en'?'part':'parte'))+'</span></summary><div class="body">' +
            '<div class="tr-tools"><input type="search" placeholder="'+t.trBuscar+'" data-buscar="'+c.n+'"><span class="estado" data-est="'+c.n+'"></span></div><div class="tr" data-cuerpo="'+c.n+'">'+t.trCargando+'</div></div></details></div>';
     });
     return h + '</div></section>';
