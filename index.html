@@ -365,7 +365,7 @@
   // 28-sep-2026 (Cesar: "con todo y tablas y fotos de las slides tambien para estudiar"):
   // las laminas de Possover salieron de los PDF de los apuntes de clase, en webp a 1400 px.
   fetch('data/laminas.json').then(function(r){ return r.ok ? r.json() : {}; })
-    .then(function(j){ LAM = j || {}; if (window.D && window.D.clases) render(); })
+    .then(function(j){ LAM = j || {}; if (D && D.secciones && typeof render === 'function') render(); })
     .catch(function(){});
 
   function laminasSec(){
