@@ -209,6 +209,13 @@
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
   .resumen .meta{font-family:var(--mono); font-size:.68rem; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.4rem; white-space:normal}
+.toc .g{display:flex;align-items:center;gap:.4rem;padding:0 .55rem;border-left:1px solid var(--rule)}
+.toc .g:first-of-type{border-left:0;padding-left:0}
+.toc .gl{font-size:.62rem;letter-spacing:.11em;opacity:.55;padding-right:.15rem;white-space:nowrap}
+.empieza{max-width:44rem;margin:1.6rem auto 0;padding:.85rem 1.1rem;border-left:3px solid var(--accent);
+  background:rgba(128,128,128,.07);border-radius:0 8px 8px 0;font-size:.97em}
+.empieza b{color:var(--accent)}
+@media(max-width:820px){.toc .g{border-left:0;padding:0}.toc .gl{width:100%}}
 .lams{display:flex;flex-direction:column;gap:26px;margin:10px 0}
 .lam1{margin:0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
 .lam1 a{display:block;border-radius:9px;overflow:hidden;border:1px solid rgba(128,128,128,.3);background:rgba(128,128,128,.06)}
@@ -361,6 +368,20 @@
     .then(function(j){ LAM = j || {}; if (window.D && window.D.clases) render(); })
     .catch(function(){});
 
+  function laminasSec(){
+    var ks = Object.keys(LAM).sort(); if (!ks.length) return '';
+    var ti = lang==='en' ? 'Slides' : 'Láminas';
+    var h = '<section class="chap" id="lam"><div class="rail"><span class="rn">▣</span>'+ti+'</div><div class="col"><h2>'+
+      (lang==='en'?'Possover\'s slides, with what he said about each one':'Las láminas de Possover, con lo que dijo de cada una')+'</h2>';
+    ks.forEach(function(k){
+      h += '<h3>'+(lang==='en'?'Session ':'Sesión ')+k+' · '+LAM[k].length+' '+ti.toLowerCase()+'</h3><div class="lams">' +
+        LAM[k].map(function(x){ return '<figure class="lam1"><a href="data/laminas/s'+k+'/'+x.f+'" target="_blank" rel="noopener">' +
+          '<img loading="lazy" src="data/laminas/s'+k+'/'+x.f+'" alt="'+esc(x.t||(ti+' '+x.p))+'"></a>' +
+          '<figcaption>'+(x.t?'<b>'+esc(x.t)+'</b>':'')+(x.x?'<span>'+esc(x.x)+'</span>':'')+'</figcaption></figure>'; }).join('') +
+        '</div>';
+    });
+    return h + '</div></section>';
+  }
   function clasesSec(){
     var t = T[lang], cl = D.clases || [];
     if (!cl.length) return '';
@@ -401,10 +422,18 @@
     var t = T[lang];
     document.documentElement.lang = lang;
     var caps = D.secciones.filter(function(s){ return s.id !== 'next'; });
+    // 28-sep-2026 (Cesar: "no entiendo como estudiar de ahi, las barras arriba que es que"):
+    // la barra mezclaba idioma, secciones y capitulos, todos con el mismo boton gris.
+    // Ahora van en TRES grupos rotulados y las laminas salen al primer nivel.
+    var gEst = lang==='en' ? 'STUDY' : 'ESTUDIAR';
+    var gCap = lang==='en' ? 'CHAPTERS' : 'CAPÍTULOS';
+    var gMat = lang==='en' ? 'MATERIAL' : 'MATERIAL';
     var toc = '<span class="right"><span class="lang"><button type="button" data-lang="es" class="'+(lang==='es'?'on':'')+'">ES</button><button type="button" data-lang="en" class="'+(lang==='en'?'on':'')+'">EN</button></span>' +
-      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span><span class="sep"></span><a href="#pr">'+t.pr+'</a><a href="#libro">'+t.libro+'</a>' +
-      caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') +
-      '<span class="sep"></span><a href="#cl">'+t.cl+'</a><a href="#mem">'+t.mem+'</a>';
+      '<button type="button" id="modo">'+t.repaso+'</button><button type="button" id="editar">'+t.editar+'</button></span>' +
+      '<span class="g"><span class="gl">'+gEst+'</span><a href="#pr">'+t.pr+'</a><a href="#libro">'+t.libro+'</a></span>' +
+      '<span class="g"><span class="gl">'+gCap+'</span>' +
+      caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') + '</span>' +
+      '<span class="g"><span class="gl">'+gMat+'</span><a href="#lam">'+(lang==='en'?'Slides':'Láminas')+'</a><a href="#cl">'+t.cl+'</a><a href="#mem">'+t.mem+'</a></span>';
     var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
     var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
       '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
@@ -412,7 +441,11 @@
       '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
     var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
     var fin = '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
-    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + practica() + libroSec() + caps.map(section).join('') + clasesSec() + mem + fin;
+    var empieza = '<p class="empieza"><b>'+(lang==='en'?'Start here:':'Empieza aquí:')+'</b> '+
+      (lang==='en'
+        ? 'answer <a href="#pr">the 5 of today</a>, then read one chapter from <b>CHAPTERS</b>. The slides of each class are under <a href="#lam">Slides</a>.'
+        : 'contesta <a href="#pr">las 5 de hoy</a>, luego lee un capítulo de <b>CAPÍTULOS</b>. Las láminas de cada clase están en <a href="#lam">Láminas</a>.')+'</p>';
+    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + empieza + practica() + libroSec() + caps.map(section).join('') + laminasSec() + clasesSec() + mem + fin;
     wire(); wirePractica(); wireClases();
   }
 
