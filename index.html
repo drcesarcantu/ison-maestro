@@ -434,18 +434,18 @@
       '<span class="g"><span class="gl">'+gCap+'</span>' +
       caps.map(function(s){ return '<a href="#'+s.id+'" data-toc="'+s.id+'">'+(s.toc ? L(s.toc) : L(s.rail))+'</a>'; }).join('') + '</span>' +
       '<span class="g"><span class="gl">'+gMat+'</span><a href="#lam">'+(lang==='en'?'Slides':'Láminas')+'</a><a href="#cl">'+t.cl+'</a><a href="#mem">'+t.mem+'</a></span>';
-    var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
-    var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
-      '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
-      '<div class="howto">'+t.howto.map(function(x){ return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('')+'</div>' +
-      '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
-    var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
-    var fin = '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
     var empieza = '<p class="empieza"><b>'+(lang==='en'?'Start here:':'Empieza aquí:')+'</b> '+
       (lang==='en'
         ? 'answer <a href="#pr">the 5 of today</a>, then read one chapter from <b>CHAPTERS</b>. The slides of each class are under <a href="#lam">Slides</a>.'
         : 'contesta <a href="#pr">las 5 de hoy</a>, luego lee un capítulo de <b>CAPÍTULOS</b>. Las láminas de cada clase están en <a href="#lam">Láminas</a>.')+'</p>';
-    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + empieza + practica() + libroSec() + caps.map(section).join('') + laminasSec() + clasesSec() + mem + fin;
+    var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
+    var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
+      empieza + '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
+      '<div class="howto">'+t.howto.map(function(x){ return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('')+'</div>' +
+      '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
+    var mem = '<section class="chap mem" id="mem"><div class="rail"><span class="rn">≡</span>'+t.mem+'</div><div class="col"><h2>'+t.memh+'</h2><p>'+t.memp+'</p>'+D.tablas.map(tabla).join('')+'</div></section>';
+    var fin = '<footer class="end">'+t.footer+esc(D.generado)+'</footer>';
+    app.innerHTML = '<nav class="toc" aria-label="Capítulos">'+toc+'</nav>' + head + practica() + libroSec() + caps.map(section).join('') + laminasSec() + clasesSec() + mem + fin;
     wire(); wirePractica(); wireClases();
   }
 
