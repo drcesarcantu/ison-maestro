@@ -136,7 +136,7 @@
   .mini{font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; padding:.25rem .55rem; border-radius:3px; border:1px solid var(--rule); background:var(--surface); color:var(--ink-soft); cursor:pointer}
   .nota{font-size:.85rem; color:var(--muted); margin:-.8rem 0 1.4rem}
   body.repaso section.chap .col > :not(h2):not(.ess):not(.quiz){display:none}
-  body.repaso section.chap.mem .col > *, body.repaso section.chap.preg .col > *{display:block}
+  body.repaso section.chap.mem .col > *, body.repaso section.chap.preg .col > *, body.repaso section#lam .col > *{display:block!important}
   body.repaso header.top .legend, body.repaso header.top .howto, body.repaso header.top .scroll{display:none}
   details.big.libro{margin:2rem 0 0}
 
@@ -183,7 +183,7 @@
   .mc .veredicto{font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; margin:0 0 .6rem}
   .mc .veredicto.ok{color:var(--ok)} .mc .veredicto.bad{color:var(--alert)}
   .pr-prev{margin-top:1.4rem} .pr-prev summary{cursor:pointer; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--muted); padding:.4rem 0}
-  body.repaso section.chap.pr .col > *{display:block}
+  body.repaso section.chap.pr .col > *{display:block!important}
 
   /* ── Resumen del libro (desplegable) y transcripciones ─────────── */
   details.big{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--muted); border-radius:0 6px 6px 0; margin:1.2rem 0}
@@ -204,7 +204,7 @@
   .tr .ln .t{font-family:var(--mono); font-size:.72rem; color:var(--accent); font-variant-numeric:tabular-nums}
   .tr .ln.hit{background:var(--accent-soft)}
   .tr .parte{font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:.6rem 0 .3rem}
-  body.repaso section.chap.cl .col > *{display:block}
+  body.repaso section.chap.cl .col > *{display:block!important}
 
   footer.end{margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); font-family:var(--mono); font-size:.74rem; color:var(--muted); line-height:1.85}
   .resumen{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:1rem 1.1rem; margin:1rem 0; font-size:.95rem; white-space:pre-line}
