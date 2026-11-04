@@ -439,7 +439,7 @@
         ? 'answer <a href="#pr">the 5 of today</a>, then read one chapter from <b>CHAPTERS</b>. The slides of each class are under <a href="#lam">Slides</a>.'
         : 'contesta <a href="#pr">las 5 de hoy</a>, luego lee un capítulo de <b>CAPÍTULOS</b>. Las láminas de cada clase están en <a href="#lam">Láminas</a>.')+'</p>';
     var d = Math.ceil((new Date(2026,10,22) - new Date()) / 864e5);
-    var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' +
+    var head = '<header class="top"><p class="eyebrow">'+t.eyebrow(D.sesiones_integradas.join('–'), D.total_sesiones)+'<span class="count">'+t.days(d)+'</span></p><h1>'+t.title+'</h1><p class="deck">'+t.deck+'</p>' + '<p style="margin:.9rem 0 0"><a href="podcast/" style="display:inline-block;background:var(--accent,#c9a86a);color:#fff;font-weight:600;padding:.65rem 1rem;border-radius:9px;text-decoration:none">🎧 Podcast de repaso en audio</a></p>' +
       empieza + '<ul class="legend">'+t.legend.map(function(l){ return '<li class="'+l[2]+'"><b>'+l[0]+'</b>'+l[1]+'</li>'; }).join('')+'</ul>' +
       '<div class="howto">'+t.howto.map(function(x){ return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'; }).join('')+'</div>' +
       '<div class="scroll" style="margin-top:2rem"><table><thead><tr>'+t.cov.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+D.cobertura.map(function(c){ return '<tr><td><strong>'+L(c.cap)+'</strong></td><td>'+L(c)+'</td><td class="st">'+c.estado+'</td></tr>'; }).join('')+'</tbody></table></div></header>';
