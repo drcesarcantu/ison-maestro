@@ -1,81 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
 <channel>
-  <title>ISON L1+L2 — repaso en audio</title>
-  <link>https://drcesarcantu.github.io/ison-maestro/podcast/</link><language>es-MX</language>
-  <itunes:author>Dr. César Cantú</itunes:author>
-  <description>Repaso en audio del curso ISON de neuropelveología (Possover). Episodios de repaso y de preguntas tipo examen.</description>
+  <title>ISON L1+L2 — repaso en audio</title><link>https://drcesarcantu.github.io/ison-maestro/podcast/</link><language>es-MX</language>
+  <itunes:author>Dr. César Cantú</itunes:author><description>Repaso en audio del curso ISON de neuropelveología (Possover).</description>
   <itunes:explicit>false</itunes:explicit>
     <item>
       <title>00 · Mapa del curso y glosario</title><itunes:title>00 · Mapa del curso y glosario</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-00-mapa-glosario.mp3" length="5788916" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-00-mapa-glosario</guid><pubDate>Fri, 23 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>0</itunes:episode>
+      <guid isPermaLink="false">ISON-00-mapa-glosario</guid><pubDate>Fri, 23 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>0</itunes:episode>
     </item>
     <item>
       <title>01 · Neuroanatomía funcional — repaso</title><itunes:title>01 · Neuroanatomía funcional — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-01R-neuroanatomia-funcional-repaso.mp3" length="4987696" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-01R-neuroanatomia-funcional-repaso</guid><pubDate>Sat, 24 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>1</itunes:episode>
+      <guid isPermaLink="false">ISON-01R-neuroanatomia-funcional-repaso</guid><pubDate>Sat, 24 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>1</itunes:episode>
     </item>
     <item>
       <title>01 · Neuroanatomía funcional — preguntas</title><itunes:title>01 · Neuroanatomía funcional — preguntas</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-01-neuroanatomia-funcional.mp3" length="8710461" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-01-neuroanatomia-funcional</guid><pubDate>Sun, 25 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>2</itunes:episode>
+      <guid isPermaLink="false">ISON-01-neuroanatomia-funcional</guid><pubDate>Sun, 25 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>2</itunes:episode>
     </item>
     <item>
       <title>02 · Autónomo y ley de la balanza — repaso</title><itunes:title>02 · Autónomo y ley de la balanza — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-02R-autonomo-balanza-repaso.mp3" length="4688024" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-02R-autonomo-balanza-repaso</guid><pubDate>Mon, 26 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>3</itunes:episode>
+      <guid isPermaLink="false">ISON-02R-autonomo-balanza-repaso</guid><pubDate>Mon, 26 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>3</itunes:episode>
     </item>
     <item>
       <title>02 · Autónomo — preguntas</title><itunes:title>02 · Autónomo — preguntas</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-02-autonomo-balanza.mp3" length="6652833" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-02-autonomo-balanza</guid><pubDate>Tue, 27 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>4</itunes:episode>
+      <guid isPermaLink="false">ISON-02-autonomo-balanza</guid><pubDate>Tue, 27 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>4</itunes:episode>
     </item>
     <item>
       <title>03 · Diagnóstico — repaso</title><itunes:title>03 · Diagnóstico — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-03R-diagnostico-repaso.mp3" length="5103458" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-03R-diagnostico-repaso</guid><pubDate>Wed, 28 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>5</itunes:episode>
+      <guid isPermaLink="false">ISON-03R-diagnostico-repaso</guid><pubDate>Wed, 28 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>5</itunes:episode>
     </item>
     <item>
       <title>03 · Diagnóstico — preguntas</title><itunes:title>03 · Diagnóstico — preguntas</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-03-diagnostico.mp3" length="5428215" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-03-diagnostico</guid><pubDate>Thu, 29 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>6</itunes:episode>
+      <guid isPermaLink="false">ISON-03-diagnostico</guid><pubDate>Thu, 29 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>6</itunes:episode>
     </item>
     <item>
       <title>04 · Mapeo del dolor y dx avanzado — repaso</title><itunes:title>04 · Mapeo del dolor y dx avanzado — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-04R-dolor-mapeo-repaso.mp3" length="3557863" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-04R-dolor-mapeo-repaso</guid><pubDate>Fri, 30 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>7</itunes:episode>
+      <guid isPermaLink="false">ISON-04R-dolor-mapeo-repaso</guid><pubDate>Fri, 30 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>7</itunes:episode>
     </item>
     <item>
       <title>04 · Mapeo del dolor — preguntas</title><itunes:title>04 · Mapeo del dolor — preguntas</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-04-dolor-mapeo.mp3" length="4772442" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-04-dolor-mapeo</guid><pubDate>Sat, 31 Oct 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>8</itunes:episode>
+      <guid isPermaLink="false">ISON-04-dolor-mapeo</guid><pubDate>Sat, 31 Oct 2026 18:54:39 +0000</pubDate><itunes:episode>8</itunes:episode>
     </item>
     <item>
       <title>05 · Síndromes de dolor — repaso</title><itunes:title>05 · Síndromes de dolor — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-05R-sindromes-dolor-repaso.mp3" length="4300984" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-05R-sindromes-dolor-repaso</guid><pubDate>Sun, 01 Nov 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>9</itunes:episode>
+      <guid isPermaLink="false">ISON-05R-sindromes-dolor-repaso</guid><pubDate>Sun, 01 Nov 2026 18:54:39 +0000</pubDate><itunes:episode>9</itunes:episode>
     </item>
     <item>
       <title>06 · Cirugía, LION y médula — repaso</title><itunes:title>06 · Cirugía, LION y médula — repaso</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-06R-cirugia-lion-medula-repaso.mp3" length="4117086" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-06R-cirugia-lion-medula-repaso</guid><pubDate>Mon, 02 Nov 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>10</itunes:episode>
+      <guid isPermaLink="false">ISON-06R-cirugia-lion-medula-repaso</guid><pubDate>Mon, 02 Nov 2026 18:54:39 +0000</pubDate><itunes:episode>10</itunes:episode>
     </item>
     <item>
       <title>06 · Cirugía — preguntas</title><itunes:title>06 · Cirugía — preguntas</itunes:title>
       <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/ISON-06-cirugia-lion-medula.mp3" length="4937945" type="audio/mpeg"/>
-      <guid isPermaLink="false">ISON-06-cirugia-lion-medula</guid><pubDate>Tue, 03 Nov 2026 18:44:54 +0000</pubDate>
-      <itunes:episode>11</itunes:episode>
+      <guid isPermaLink="false">ISON-06-cirugia-lion-medula</guid><pubDate>Tue, 03 Nov 2026 18:54:39 +0000</pubDate><itunes:episode>11</itunes:episode>
     </item>
 </channel></rss>
