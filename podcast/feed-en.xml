@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<channel>
+  <title>ISON L1+L2 — audio review (English)</title><link>https://drcesarcantu.github.io/ison-maestro/podcast/en/</link><language>es-MX</language>
+  <itunes:author>Dr. César Cantú</itunes:author><description>Audio review of the ISON neuropelveology course (Possover).</description>
+  <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>00 · Course map &amp; glossary</title><itunes:title>00 · Course map &amp; glossary</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-00-course-map-glossary.mp3" length="5016943" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-00-course-map-glossary</guid><pubDate>Mon, 26 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>0</itunes:episode>
+    </item>
+    <item>
+      <title>01 · Functional neuroanatomy — review</title><itunes:title>01 · Functional neuroanatomy — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-01R-functional-neuroanatomy-review.mp3" length="4726054" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-01R-functional-neuroanatomy-review</guid><pubDate>Tue, 27 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>1</itunes:episode>
+    </item>
+    <item>
+      <title>01 · Functional neuroanatomy — questions</title><itunes:title>01 · Functional neuroanatomy — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-01-functional-neuroanatomy-questions.mp3" length="6910730" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-01-functional-neuroanatomy-questions</guid><pubDate>Wed, 28 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>2</itunes:episode>
+    </item>
+    <item>
+      <title>02 · Autonomic system &amp; the balance law — review</title><itunes:title>02 · Autonomic system &amp; the balance law — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-02R-autonomic-review.mp3" length="4530867" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-02R-autonomic-review</guid><pubDate>Thu, 29 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>3</itunes:episode>
+    </item>
+    <item>
+      <title>02 · Autonomic — questions</title><itunes:title>02 · Autonomic — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-02-autonomic-questions.mp3" length="6448871" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-02-autonomic-questions</guid><pubDate>Fri, 30 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>4</itunes:episode>
+    </item>
+    <item>
+      <title>03 · Diagnosis — review</title><itunes:title>03 · Diagnosis — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-03R-diagnosis-review.mp3" length="4462308" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-03R-diagnosis-review</guid><pubDate>Sat, 31 Oct 2026 15:47:50 +0000</pubDate><itunes:episode>5</itunes:episode>
+    </item>
+    <item>
+      <title>03 · Diagnosis — questions</title><itunes:title>03 · Diagnosis — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-03-diagnosis-questions.mp3" length="5737086" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-03-diagnosis-questions</guid><pubDate>Sun, 01 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>6</itunes:episode>
+    </item>
+    <item>
+      <title>04 · Pain mapping &amp; advanced dx — review</title><itunes:title>04 · Pain mapping &amp; advanced dx — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-04R-pain-mapping-review.mp3" length="2997796" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-04R-pain-mapping-review</guid><pubDate>Mon, 02 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>7</itunes:episode>
+    </item>
+    <item>
+      <title>04 · Pain mapping — questions</title><itunes:title>04 · Pain mapping — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-04-pain-mapping-questions.mp3" length="4668368" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-04-pain-mapping-questions</guid><pubDate>Tue, 03 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>8</itunes:episode>
+    </item>
+    <item>
+      <title>05 · Pain syndromes — review</title><itunes:title>05 · Pain syndromes — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-05R-pain-syndromes-review.mp3" length="3789399" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-05R-pain-syndromes-review</guid><pubDate>Wed, 04 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>9</itunes:episode>
+    </item>
+    <item>
+      <title>05 · Pain syndromes — questions</title><itunes:title>05 · Pain syndromes — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-05-pain-syndromes-questions.mp3" length="5639707" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-05-pain-syndromes-questions</guid><pubDate>Thu, 05 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>10</itunes:episode>
+    </item>
+    <item>
+      <title>06 · Surgery, LION &amp; spinal cord — review</title><itunes:title>06 · Surgery, LION &amp; spinal cord — review</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-06R-surgery-lion-review.mp3" length="3852105" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-06R-surgery-lion-review</guid><pubDate>Fri, 06 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>11</itunes:episode>
+    </item>
+    <item>
+      <title>06 · Surgery — questions</title><itunes:title>06 · Surgery — questions</itunes:title>
+      <enclosure url="https://drcesarcantu.github.io/ison-maestro/podcast/en/ISON-EN-06-surgery-lion-questions.mp3" length="4946724" type="audio/mpeg"/>
+      <guid isPermaLink="false">ISON-EN-06-surgery-lion-questions</guid><pubDate>Sat, 07 Nov 2026 15:47:50 +0000</pubDate><itunes:episode>12</itunes:episode>
+    </item>
+</channel></rss>
